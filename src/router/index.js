@@ -21,7 +21,7 @@ const routes = [
           title: '首页',
         },
         component: () =>
-          import(/* webpackChunkName: "Home" */ '../pages/Home.vue'),
+          import(/* webpackChunkName: "Home" */ '../pages/Home/index.vue'),
       },
       {
         path: '/About',
@@ -31,7 +31,27 @@ const routes = [
           title: '关于',
         },
         component: () =>
-          import(/* webpackChunkName: "Home" */ '../pages/About.vue'),
+          import(/* webpackChunkName: "About" */ '../pages/About/index.vue'),
+      },
+      {
+        path: '/Edit',
+        name: 'Edit',
+        meta: {
+          isShow: false,
+          title: '',
+        },
+        component: () =>
+          import(/* webpackChunkName: "Edit" */ '../pages/Edit/index.vue'),
+      },
+      {
+        path: '/Detail',
+        name: 'Detail',
+        meta: {
+          isShow: false,
+          title: '',
+        },
+        component: () =>
+          import(/* webpackChunkName: "Edit" */ '../pages/Detail/index.vue'),
       },
     ],
   },

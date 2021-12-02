@@ -1,15 +1,29 @@
 <template>
   <div>
-    <a-layout id="components-layout-demo-top" class="layout">
-      <a-layout-header style="background: none;">
+    <a-layout class="layout">
+      <a-layout-header style="background: none; padding: 0;">
         <!--ant-layout-header背景色修改为none-->
-        <div class="logo" />
-        <a-menu theme="light" mode="horizontal" :style="{ lineHeight: '64px' }">
+
+        <div class="logo">CoderZhang's Blog</div>
+        <div style="float: right; padding-right: 20px;">
+          <a-button type="primary" style="margin-right: 16px;">登录</a-button>
+          <a-button style="margin-right: 16px;">注册</a-button>
+          <a-button @click="Send">发布</a-button>
+        </div>
+        <a-menu
+          theme="dark"
+          mode="horizontal"
+          :style="{
+            lineHeight: '64px',
+            backgroundColor: '#343a40',
+          }"
+        >
           <a-menu-item
             :route="i.path"
             v-for="i in tablist"
             :key="i.name"
             index="i.title"
+            style="margin-left: 20px;"
           >
             <router-link :to="i.path" style="display: inline;">
               {{ i.meta.title }}
@@ -25,16 +39,17 @@
         </a-breadcrumb> -->
         <div
           :style="{
-            background: '#fff',
             padding: '24px',
             minHeight: '280px',
+            maxWidth: '1140px',
+            margin: '0 auto',
           }"
         >
           <router-view />
         </div>
       </a-layout-content>
       <a-layout-footer style="text-align: center;">
-        Ant Design ©2018 Created by Ant UED
+        Design ©2021 Created by CoderZhang
       </a-layout-footer>
     </a-layout>
   </div>
@@ -54,16 +69,26 @@ export default {
 
   mounted() {},
 
-  methods: {},
+  methods: {
+    Send() {
+      this.$router.push({
+        path: '/Edit',
+      })
+    },
+  },
 }
 </script>
 
 <style lang="less" scoped>
-#components-layout-demo-top .logo {
-  width: 120px;
-  height: 31px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px 24px 16px 0;
-  float: left;
+.layout {
+  .logo {
+    width: 120px;
+    height: 31px;
+    // background: rgba(255, 255, 255, 0.2);
+    //   margin: 16px 24px 16px 0;
+    color: aliceblue;
+    margin-left: 16px;
+    float: left;
+  }
 }
 </style>
