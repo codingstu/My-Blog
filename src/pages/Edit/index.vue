@@ -35,22 +35,26 @@
         <div class="text">博客内容：</div>
         <div class="iptBox">
           <a-upload
-            name="avatar"
+            action="#"
             list-type="picture-card"
-            class="avatar-uploader"
-            :show-upload-list="false"
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            :before-upload="beforeUpload"
+            :file-list="fileList"
+            @preview="handlePreview"
             @change="handleChange"
           >
-            <img v-if="imageUrl" :src="imageUrl" alt="avatar" />  
-            <div v-else>
-              <a-icon :type="loading ? 'loading' : 'plus'" />
+            <div v-if="fileList.length < 8">
+              <a-icon type="plus" />
               <div class="ant-upload-text">
                 Upload
               </div>
             </div>
           </a-upload>
+          <a-modal
+            :visible="previewVisible"
+            :footer="null"
+            @cancel="handleCancel"
+          >
+            <img alt="example" style="width: 100%;" :src="previewImage" />
+          </a-modal>
         </div>
       </div>
 
@@ -72,12 +76,14 @@
 </template>
 
 <script>
-function getBase64(img, callback) {
-  const reader = new FileReader()
-  reader.addEventListener('load', () => callback(reader.result))
-  reader.readAsDataURL(img)
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject(error)
+  })
 }
-
 export default {
   data() {
     return {
@@ -86,39 +92,24 @@ export default {
         author: '',
         content: '',
       },
-      loading: false,
-      imageUrl: '../../assets/logo.png',
+      actionUrl: {
+        name: 'xxx.png',
+        status: 'done',
+        url:
+          'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        thumbUrl:
+          'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      },
+
+      // imageUrl: '',
+      previewVisible: false,
+      previewImage:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      fileList: [],
     }
   },
   mounted() {},
   methods: {
-    onSubmit() {
-      const title = this.blogObj.title
-      const author = this.blogObj.author
-      const content = this.blogObj.content
-      this.axios
-        .post(`/api/blog/addBlog`, {
-          title: title,
-          author: author,
-          content: content,
-          logo: this.imageUrl,
-        })
-        .then((res) => {
-          console.log(res)
-          if (res.status === 200) {
-            // console.log('ss')
-            // this.$message({
-            //   title: '恭喜你',
-            //   message: '添加成功',
-            //   type: 'success',
-            // })
-            this.$router.push({ path: '/Home' })
-          } else {
-            // alert(msg);
-            console.log(msg)
-          }
-        })
-    },
     // onSubmit(){
     //   axios({
     //     url:'https://ku.qingnian8.com/dataApi/blog/addBlog.php',
@@ -141,53 +132,46 @@ export default {
     //     this.classArr=res.data
     //   })
     // }
-    handleChange(info) {
-      if (info.file.status === 'uploading') {
-        this.loading = true
-        return
+    handleCancel() {
+      this.previewVisible = false
+    },
+    async handlePreview(file) {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj)
       }
-      if (info.file.status === 'done') {
-        // Get this url from response in real world.
-        getBase64(info.file.originFileObj, (imageUrl) => {
-          this.imageUrl = imageUrl
-          this.loading = false
+      this.previewImage = file.url || file.preview
+      this.previewVisible = true
+    },
+    handleChange({ fileList }) {
+      this.fileList = fileList
+    },
+    onSubmit() {
+      const title = this.blogObj.title
+      const author = this.blogObj.author
+      const content = this.blogObj.content
+
+      this.axios
+        .post(`/api/blog/addBlog`, {
+          title: title,
+          author: author,
+          content: content,
+          logo: this.previewImage,
         })
-      }
-    },
-    beforeUpload(file) {
-      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
-      if (!isJpgOrPng) {
-        this.$message.error('You can only upload JPG file!')
-      }
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isLt2M) {
-        this.$message.error('Image must smaller than 2MB!')
-      }
-      return isJpgOrPng && isLt2M
-    },
-    handleChange(info) {
-      if (info.file.status === 'uploading') {
-        this.loading = true
-        return
-      }
-      if (info.file.status === 'done') {
-        // Get this url from response in real world.
-        getBase64(info.file.originFileObj, (imageUrl) => {
-          this.imageUrl = imageUrl
-          this.loading = false
+        .then((res) => {
+          console.log(res)
+          if (res.status === 200) {
+            // console.log('ss')
+            // this.$message({
+            //   title: '恭喜你',
+            //   message: '添加成功',
+            //   type: 'success',
+            // })
+            this.$router.push({ path: '/Home' })
+          } else {
+            // alert(msg);
+            console.log(msg)
+          }
         })
-      }
-    },
-    beforeUpload(file) {
-      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
-      if (!isJpgOrPng) {
-        this.$message.error('You can only upload JPG file!')
-      }
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isLt2M) {
-        this.$message.error('Image must smaller than 2MB!')
-      }
-      return isJpgOrPng && isLt2M
     },
   },
 }
