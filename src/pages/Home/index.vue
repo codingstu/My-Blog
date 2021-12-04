@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="display: flex; justify-content: space-between;">
-      <div style="flex：0 0 75%;max-width: 73%;">
+      <div style="flex：0 0 75%;min-width:73%;max-width: 73%;">
         <Swiper />
         <List style="margin-top: 20px;" />
       </div>

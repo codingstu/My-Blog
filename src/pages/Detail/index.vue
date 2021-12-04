@@ -1,7 +1,19 @@
 <template>
   <div>
-    <div>
-      {{}}
+    <div style="padding: 15px 15px; background: #fff; border-radius: 3%;">
+      <div class="header">
+        <div class="title">
+          {{ title }}
+        </div>
+        <div class="info">
+          <span style="margin-right: 20px;">
+            更新时间:{{ update_time | dateFormat }}
+          </span>
+          <span>作者:{{ author }}</span>
+        </div>
+      </div>
+      <article v-html="content"></article>
+      <!-- {{ content }} -->
     </div>
   </div>
 </template>
@@ -11,7 +23,12 @@ export default {
   name: 'WorkspaceJsonIndex',
 
   data() {
-    return {}
+    return {
+      title: '',
+      content: '',
+      update_time: '',
+      author: '',
+    }
   },
 
   created() {
@@ -20,20 +37,38 @@ export default {
 
   methods: {
     async getArticle() {
-      console.log(this.$route.query.title)
+      //   console.log(this.$route.query.item.title)
       //   this.$route.query.title
-      const data={
-          title:this.$route.query.title
-      }
       try {
-        let res = await this.axios.get(`/api/blog/getBlog`, data)
-        console.log(res);
+        ;[this.title, this.content, this.author, this.update_time] = [
+          this.$route.query.item.title,
+          this.$route.query.item.content,
+          this.$route.query.item.author,
+          this.$route.query.item.create_time,
+        ]
+        // let res = await this.axios.get(`/api/blog/getBlog`, data)
+        // console.log(res)
       } catch (error) {
-          console.log(error);
+        console.log(error)
       }
     },
   },
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.header {
+  border-bottom: 1px solid #333333;
+  margin: 0 5px 15px;
+  text-align: center;
+  .title {
+    line-height: 1.2;
+    text-align: center;
+    padding: 0 0 20px 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: '微软雅黑';
+  }
+}
+</style>

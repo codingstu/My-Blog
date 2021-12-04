@@ -1,13 +1,36 @@
 <template>
   <a-carousel autoplay>
-    <div><h3>1</h3></div>
-    <div><h3>2</h3></div>
-    <div><h3>3</h3></div>
-    <div><h3>4</h3></div>
+    <div v-for="(item, index) in dataTitle" :key="item.id">
+      <div>{{ item.title }}</div>
+    </div>
   </a-carousel>
 </template>
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      title: '',
+      imgUrl: '',
+      dataList: [],
+    }
+  },
+  computed: {
+    dataTitle() {
+      return this.dataList.slice(0, 4)
+    },
+  },
+  created() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$bus.$on('getTarget', (payload) => {
+        console.log('List数据', payload)
+        this.dataList = payload
+      })
+    },
+  },
+}
 </script>
 <style scoped>
 /* For demo */
@@ -15,7 +38,7 @@ export default {}
   text-align: center;
   height: 260px;
   line-height: 260px;
-  background: #364d79;
+  background: hsl(219, 22%, 62%);
   overflow: hidden;
 }
 

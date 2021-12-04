@@ -31,7 +31,7 @@
             </a>
             <a-avatar slot="avatar" :src="item.avatar" />
           </a-list-item-meta>
-          <span class="content" @click="goDetail(item.title)">
+          <span class="content" v-html="" @click="goDetail(item)">
             {{ item.content }}
           </span>
         </a-list-item>
@@ -47,8 +47,7 @@ export default {
   data() {
     return {
       listData: [],
-      logo:
-        'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png',
+      logo: '',
       pagination: {
         // onChange: page => {
         //   console.log(page);
@@ -69,33 +68,22 @@ export default {
 
   methods: {
     async getData() {
-      // for (let i = 0; i < 20; i++) {
-      //   this.listData.push({
-      //     href: 'https://www.antdv.com/',
-      //     title: `ant design vue part ${i}`,
-      //     avatar:
-      //       'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      //     description:
-      //       'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-      //     content:
-      //       'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-      //   })
-      // }
       try {
         let res = await this.axios.get(`/api/blog/getBlog`)
         const req = res.data
         this.listData = req
-        console.log(res)
+        this.$bus.$emit('getTarget', this.listData)
+        // console.log(res)
       } catch (error) {
         console.log(error)
       }
     },
-    goDetail(title) {
-      console.log(title)
+    goDetail(item) {
+      console.log(item)
       this.$router.push({
         path: '/Detail',
         query: {
-          title: title,
+          item: item,
         },
       })
     },
