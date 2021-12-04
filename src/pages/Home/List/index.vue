@@ -31,8 +31,8 @@
             </a>
             <a-avatar slot="avatar" :src="item.avatar" />
           </a-list-item-meta>
-          <span class="content" v-html="" @click="goDetail(item)">
-            {{ item.content }}
+          <span class="content" @click="goDetail(item)">
+            {{ item.md }}
           </span>
         </a-list-item>
       </a-list>
@@ -70,6 +70,7 @@ export default {
     async getData() {
       try {
         let res = await this.axios.get(`/api/blog/getBlog`)
+        console.log(res)
         const req = res.data
         this.listData = req
         this.$bus.$emit('getTarget', this.listData)

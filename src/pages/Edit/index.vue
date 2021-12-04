@@ -158,10 +158,11 @@ export default {
       //  let logoUrl= await this.handlePreview()
       // console.log(logoUrl);
       console.log(this.blogObj.content);
-      const [title, author, content, logo] = [
+      const [title, author, content, markdown,logo] = [
         this.blogObj.title,
         this.blogObj.author,
         this.render,
+        this.blogObj.content,
         this.previewImage,
       ];
 
@@ -172,6 +173,7 @@ export default {
           title: title,
           author: author,
           content: content,
+          md: markdown,
           logo: logo,
         })
         .then((res) => {
@@ -207,6 +209,7 @@ export default {
     },
     changeData(value, render) {
       // value中是文本值,render是渲染出的html文本
+      // this.value = value;
       this.render = render;
     },
   },

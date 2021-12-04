@@ -21,13 +21,13 @@ var jsonWrite = (res, ret) => {
 // POST 请求
 router.post('/addBlog', (req, res) => {
   let sql =
-    'insert ignore into blog( title, author, content, logo ) values (?, ?, ?, ?)'
+    'insert ignore into blog( title, author, content,md, logo ) values (?, ?, ?, ?,?)'
   let params = req.body
   console.log(params)
   // ! [params.username, params.age] 自动填充到之前 ？ 里面
   conn.query(
     sql,
-    [params.title, params.author, params.content, params.logo],
+    [params.title, params.author, params.content, params.md, params.logo],
     (err, result) => {
       if (err) return console.log(err)
       if (result) {
