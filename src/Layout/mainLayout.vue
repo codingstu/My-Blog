@@ -6,9 +6,12 @@
 
         <div class="logo">CoderZhang's Blog</div>
         <div style="float: right; padding-right: 20px;">
-          <a-button type="primary" style="margin-right: 16px;">登录</a-button>
-          <a-button style="margin-right: 16px;">注册</a-button>
-          <a-button @click="Send">发布</a-button>
+          <a-avatar icon="user" style="margin-right: 16px;" />
+          <a-button type="primary" style="margin-right: 16px;" @click="login">
+            登录
+          </a-button>
+          <!-- <a-button style="margin-right: 16px;">注册</a-button> -->
+          <a-button @click="send">发布</a-button>
         </div>
         <a-menu
           theme="dark"
@@ -70,9 +73,14 @@ export default {
   mounted() {},
 
   methods: {
-    Send() {
+    send() {
       this.$router.push({
         path: '/Edit',
+      })
+    },
+    login() {
+      this.$router.push({
+        path: '/login',
       })
     },
   },

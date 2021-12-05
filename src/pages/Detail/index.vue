@@ -11,8 +11,9 @@
           </span>
           <span>作者:{{ author }}</span>
         </div>
+        <div class="border"></div>
       </div>
-      <article v-html="content"></article>
+      <article v-html="content" class="content"></article>
       <!-- {{ content }} -->
     </div>
   </div>
@@ -58,7 +59,6 @@ export default {
 
 <style lang="less" scoped>
 .header {
-  border-bottom: 1px solid #333333;
   margin: 0 5px 15px;
   text-align: center;
   .title {
@@ -70,5 +70,13 @@ export default {
     font-weight: bold;
     font-family: '微软雅黑';
   }
+  .border {
+    padding-top: 10px;
+    border-bottom: 1px solid #e5e6eb;
+  }
+}
+.content {
+  padding: 25px;
+  background-color: #f8f8f8;
 }
 </style>

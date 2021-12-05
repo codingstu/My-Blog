@@ -51,9 +51,21 @@ const routes = [
           title: '',
         },
         component: () =>
-          import(/* webpackChunkName: "Edit" */ '../pages/Detail/index.vue'),
+          import(/* webpackChunkName: "Detail" */ '../pages/Detail/index.vue'),
       },
     ],
+  },
+  {
+    path: '/Login',
+    name: 'Login',
+    component: () =>
+      import(/* webpackChunkName: "Login" */ '../pages/Login/login.vue'),
+  },
+  {
+    path: '/Register',
+    name: 'Register',
+    component: () =>
+      import(/* webpackChunkName: "Register" */ '../pages/Login/register.vue'),
   },
   // {
   //   path: '/about',
