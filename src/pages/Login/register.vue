@@ -107,11 +107,6 @@
               Register
             </a-button>
           </div>
-
-          Or
-          <a href="">
-            register now!
-          </a>
         </a-form-item>
       </a-form>
     </div>

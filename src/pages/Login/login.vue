@@ -72,7 +72,7 @@
           </a>
           <div class="login-number">
             <router-link style="flex: 1;" to="/Register">
-              创建账号
+              register now!
             </router-link>
             <a-button
               type="primary"
@@ -83,11 +83,6 @@
               Log in
             </a-button>
           </div>
-
-          Or
-          <a href="">
-            register now!
-          </a>
         </a-form-item>
       </a-form>
     </div>

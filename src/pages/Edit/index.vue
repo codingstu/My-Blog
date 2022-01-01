@@ -27,8 +27,8 @@
       <div class="row rowArea">
         <div class="text">博客内容：</div>
         <div class="iptBox">
-          <!-- <textarea v-model="blogObj.content"></textarea> -->
-           <mavon-editor ref="md" v-model="blogObj.content" :toolbars="toolbars" @imgAdd="imgAdd" @change="changeData"/>
+          <!-- <textarea></textarea> -->
+           <mavon-editor ref="md" v-model="blogObj.content" :toolbars="toolbars" :ishljs='ishljs' :codeStyle="codeStyle" @imgAdd="imgAdd" @change="changeData" />
         </div>
       </div>
 
@@ -102,6 +102,8 @@ export default {
       fileList: [],
       text: "",
       render: "",
+     codeStyle:"agate",
+     ishljs:true,
       toolbars: {
         bold: true, // 粗体
         italic: true, // 斜体

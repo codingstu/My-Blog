@@ -77,6 +77,6 @@ export default {
 }
 .content {
   padding: 25px;
-  background-color: #f8f8f8;
+  // background-color: #f8f8f8;
 }
 </style>

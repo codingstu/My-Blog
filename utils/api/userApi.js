@@ -21,7 +21,7 @@ var jsonWrite = (res, ret) => {
 router.post('/addUser', (req, res) => {
   var sql = 'insert into user( name, password,checkpwd) values (?, ?,?)'
   var params = req.body
-  console.log(params)
+  // console.log(params)
   // ! [params.username, params.age] 自动填充到之前 ？ 里面
   conn.query(
     sql,

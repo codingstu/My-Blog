@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="item">wuhu</div>
+    <div class="item">
+      
+    </div>
   </div>
 </template>
 

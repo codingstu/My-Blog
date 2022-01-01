@@ -6,8 +6,13 @@
 
         <div class="logo">CoderZhang's Blog</div>
         <div style="float: right; padding-right: 20px;">
-          <a-avatar icon="user" style="margin-right: 16px;" />
-          <a-button type="primary" style="margin-right: 16px;" @click="login">
+          <a-input-search
+            placeholder="input search text"
+            style="margin-right: 560px; width: 200px;"
+            @search="onSearch"
+          />
+          <a-avatar icon="user" class="mainTop" />
+          <a-button type="primary" class="mainTop" @click="login">
             登录
           </a-button>
           <!-- <a-button style="margin-right: 16px;">注册</a-button> -->
@@ -73,6 +78,13 @@ export default {
   mounted() {},
 
   methods: {
+    async onSearch(i) {
+      console.log(i)
+      const data = i
+      let res = await this.axios.get(`/api/blog/searchBlog?title=${data}`)
+      console.log(res)
+      this.$bus.$emit('getTarget', res)
+    },
     send() {
       this.$router.push({
         path: '/Edit',
@@ -97,6 +109,9 @@ export default {
     color: aliceblue;
     margin-left: 16px;
     float: left;
+  }
+  .mainTop {
+    margin-right: 16px;
   }
 }
 </style>
