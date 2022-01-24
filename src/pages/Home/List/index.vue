@@ -32,8 +32,8 @@
               <a style="margin-left: 20px;" slot="title" :href="item.href">
                 {{ item.author }}
               </a>
-              <span slot="title" @click="delData(item.title)">
-                删除
+              <span slot="title" class="delBtn" @click="delData(item.title)">
+                <a-button>删除</a-button>
               </span>
               <a-avatar slot="avatar" :src="item.avatar" />
             </a-list-item-meta>
@@ -50,7 +50,7 @@
 <script>
 export default {
   name: 'ListIndex',
-
+   inject: ['reload'],
   data() {
     return {
       listData: [],
@@ -108,6 +108,9 @@ export default {
       try {
         const data = { title: item }
         let res = await this.axios.post(`/api/blog/delBlog`, data)
+         if ((status = 200)) {
+          this.reload()
+        }
         console.log(res)
       } catch (error) {
         console.log(error)
@@ -133,6 +136,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.delBtn{
+  float: right;
+}
 .content {
   overflow: hidden;
   text-overflow: ellipsis;
