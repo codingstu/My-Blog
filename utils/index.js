@@ -8,7 +8,7 @@
  const userApi = require('./api/userApi');
  const blogApi = require('./api/blogApi');
  // 端口号
- const port = 8888;
+ const port = 3000;
  // 注册全局解析中间件
  app.use(express.json());
  app.use(express.urlencoded({ extended: false }));
@@ -17,4 +17,4 @@
  app.use('/api/blog', blogApi);
 
  // 调用 app.listen() 启动服务器
- app.listen(port, () => console.log(`Example app listening on port 8888!`));
+ app.listen(port, () => console.log(`Example app listening on port 3000!`));
